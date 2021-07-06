@@ -44,3 +44,15 @@ this.variable = variable;
 2. python - pip
 3. java -mavenCentral, jcenter
 
+## 디비(h2)세팅
+1. application.properties 세팅 후 
+2. h2 console 확인
+- localhost:8080/h2-console에서 확인
+
+## JPA
+- spring.jpa.show-sql=true (쿼리 보기)
+- 클래스와 리포지토리 생성
+- abstract 직접구현 안됨 상속으로만 사용가능
+- repository에 저장
+- findAll로 찾기
+- extends : 뒤에껄 상속해서 가져와서씀
