@@ -47,7 +47,7 @@ this.variable = variable;
 ## 디비(h2)세팅
 1. application.properties 세팅 후 
 2. h2 console 확인
-- localhost:8080/h2-console에서 확인
+    - localhost:8080/h2-console에서 확인
 
 ## JPA
 - spring.jpa.show-sql=true (쿼리 보기)
@@ -56,3 +56,24 @@ this.variable = variable;
 - repository에 저장
 - findAll로 찾기
 - extends : 뒤에껄 상속해서 가져와서씀
+
+## 스프링의 3가지 영역
+1. Controller : 가장 바깥 부분, 요청/응답을 처리함.
+
+2. Service : 중간 부분, 실제 중요한 작동이 많이 일어나는 부분
+
+3. Repo : 가장 안쪽 부분, DB와 맞닿아 있음.
+    - (Repository, Entity)
+
+- Update 는 Service 부분에 작성
+
+## API
+1.get(R)
+
+2 .post(C)
+
+3.put(U)
+
+4.delete(D)
+
+- 주소의 명사는 복수형, 동사x
