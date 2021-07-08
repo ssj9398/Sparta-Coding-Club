@@ -66,6 +66,7 @@ this.variable = variable;
     - (Repository, Entity)
 
 - Update 는 Service 부분에 작성
+- Repository 생성, 삭제, 조회
 
 ## API
 1.get(R)
