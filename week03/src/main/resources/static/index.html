@@ -337,7 +337,6 @@
                     contentType: "application/json",
                     data: JSON.stringify(data),
                     success: function (res) {
-                        alert('성공');
 
                         window.location.reload();
                     }
@@ -350,19 +349,18 @@
                 let username = $(`#${id}-username`).text().trim();
                 let contents = $(`#${id}-textarea`).val().trim();
 
-                if(isValidContents(contents)==false){
+                if (isValidContents(contents) == false) {
                     return;
                 }
 
-                let data = {'username' : username, 'contents':contents }
+                let data = {'username': username, 'contents': contents}
 
                 $.ajax({
-                    type:"PUT",
-                    url:`/api/memos/${id}`,
-                    data:JSON.stringify(data),
+                    type: "PUT",
+                    url: `/api/memos/${id}`,
+                    data: JSON.stringify(data),
                     contentType: 'application/JSON',
-                    success: function(res){
-                        alert('변경 완료');
+                    success: function (res) {
                         window.location.reload();
                     }
 
@@ -376,6 +374,14 @@
 
             // 메모를 삭제합니다.
             function deleteOne(id) {
+                $.ajax({
+                    type:"DELETE",
+                    url:`/api/memos/${id}`,
+                    success:function (res){
+                        window.location.reload();
+                    }
+
+                })
                 // 1. DELETE /api/memos/{id} 에 요청해서 메모를 삭제합니다.
             }
     </script>

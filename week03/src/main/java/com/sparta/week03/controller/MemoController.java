@@ -36,7 +36,7 @@ public class MemoController {
 
     @DeleteMapping("/api/memos/{id}")
     public Long deleteMemo(@PathVariable Long id){
-        memoRepository.deleteAll();
+        memoRepository.deleteById(id);
         return id;
     }
 }
