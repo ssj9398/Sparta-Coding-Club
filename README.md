@@ -78,3 +78,11 @@ this.variable = variable;
 4.delete(D)
 
 - 주소의 명사는 복수형, 동사x
+
+## JAVASCRIPT
+- 백틱
+```javascript
+let name = '내 이름';
+let text = `${name}님의 스프링 5주 완주를 축하합니다!`;
+console.log(text);
+```
