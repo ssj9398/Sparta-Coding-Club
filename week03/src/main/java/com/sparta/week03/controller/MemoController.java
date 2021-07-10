@@ -28,13 +28,13 @@ public class MemoController {
         return memoRepository.findAllByOrderByModifiedAtDesc();
     }
 
-    @PutMapping("/api/momos/{id}")
+    @PutMapping("/api/memos/{id}")
     public Long updateMemo(@PathVariable Long id, @RequestBody MemoRequestDto requestDto){
         memoService.update(id, requestDto);
         return id;
     }
 
-    @DeleteMapping("/api/momos/{id}")
+    @DeleteMapping("/api/memos/{id}")
     public Long deleteMemo(@PathVariable Long id){
         memoRepository.deleteAll();
         return id;

@@ -289,33 +289,36 @@
         }
 
         // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
+        // 메모 하나를 HTML로 만들어서 body 태그 내 원하는 곳에 붙입니다.
         function addHTML(id, username, contents, modifiedAt) {
+            // 1. HTML 태그를 만듭니다.
             let tempHtml = `<div class="card">
-            <!-- date/username 영역 -->
-            <div class="metadata">
-                <div class="date">
-                    ${modifiedAt}
-                </div>
-                <div id="1-username" class="username">
-                    ${username}
-                </div>
+        <!-- date/username 영역 -->
+        <div class="metadata">
+            <div class="date">
+                ${modifiedAt}
             </div>
-            <!-- contents 조회/수정 영역-->
-            <div class="contents">
-                <div id="${id}-contents" class="text">
-                    ${contents}
-                </div>
-                <div id="${id}-editarea" class="edit">
-                    <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
-                </div>
+            <div id="${id}-username" class="username">
+                ${username}
             </div>
-            <!-- 버튼 영역-->
-            <div class="footer">
-                <img id="${id}-edit" onclick="editPost('${id}')" class="icon-start-edit" src="images/edit.png" alt="">
-                <img id="${id}-delete" onclick="deleteOne('${id}')" class="icon-delete" src="images/delete.png" alt="">
-                <img id="${id}-submit" onclick="submitEdit('${id}')" class="icon-end-edit" src="images/done.png" alt="">
+        </div>
+        <!-- contents 조회/수정 영역-->
+        <div class="contents">
+            <div id="${id}-contents" class="text">
+                ${contents}
             </div>
-        </div>`
+            <div id="${id}-editarea" class="edit">
+                <textarea id="${id}-textarea" class="te-edit" name="" id="" cols="30" rows="5"></textarea>
+            </div>
+        </div>
+        <!-- 버튼 영역-->
+        <div class="footer">
+            <img id="${id}-edit" class="icon-start-edit" src="images/edit.png" alt="" onclick="editPost('${id}')">
+            <img id="${id}-delete" class="icon-delete" src="images/delete.png" alt="" onclick="deleteOne('${id}')">
+            <img id="${id}-submit" class="icon-end-edit" src="images/done.png" alt="" onclick="submitEdit('${id}')">
+        </div>
+    </div>`;
+            // 2. #cards-box 에 HTML을 붙인다.
             $('#cards-box').append(tempHtml);
         }
 
@@ -344,6 +347,27 @@
 
             // 메모를 수정합니다.
             function submitEdit(id) {
+                let username = $(`#${id}-username`).text().trim();
+                let contents = $(`#${id}-textarea`).val().trim();
+
+                if(isValidContents(contents)==false){
+                    return;
+                }
+
+                let data = {'username' : username, 'contents':contents }
+
+                $.ajax({
+                    type:"PUT",
+                    url:`/api/memos/${id}`,
+                    data:JSON.stringify(data),
+                    contentType: 'application/JSON',
+                    success: function(res){
+                        alert('변경 완료');
+                        window.location.reload();
+                    }
+
+                })
+
                 // 1. 작성 대상 메모의 username과 contents 를 확인합니다.
                 // 2. 작성한 메모가 올바른지 isValidContents 함수를 통해 확인합니다.
                 // 3. 전달할 data JSON으로 만듭니다.
