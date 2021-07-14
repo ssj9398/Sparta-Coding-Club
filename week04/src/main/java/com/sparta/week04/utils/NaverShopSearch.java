@@ -4,11 +4,13 @@ import com.sparta.week04.models.ItemDto;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.http.*;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class NaverShopSearch {
     public String search(String query) {
         RestTemplate rest = new RestTemplate();
@@ -28,18 +30,22 @@ public class NaverShopSearch {
         return response;
     }
 
-    public List<ItemDto> fromJSONtoItems(String result){
+    public List<ItemDto> fromJSONtoItems(String result) {
         JSONObject rjson = new JSONObject(result);
-        System.out.println(rjson);
-        JSONArray items = rjson.getJSONArray("items");
-        List<ItemDto> itemDtoList = new ArrayList<>();
-
-        for (int i = 0; i < items.length(); i++) {
+        JSONArray items  = rjson.getJSONArray("items");
+        List<ItemDto> ret = new ArrayList<>();
+        for (int i=0; i<items.length(); i++) {
             JSONObject itemJson = items.getJSONObject(i);
+            System.out.println(itemJson);
             ItemDto itemDto = new ItemDto(itemJson);
-            itemDtoList.add(itemDto);
-
+            ret.add(itemDto);
         }
-        return itemDtoList;
+        return ret;
+    }
+
+    public static void main(String[] args) {
+        NaverShopSearch naverShopSearch = new NaverShopSearch();
+        String ret = naverShopSearch.search("아이맥");
+        naverShopSearch.fromJSONtoItems(ret);
     }
 }

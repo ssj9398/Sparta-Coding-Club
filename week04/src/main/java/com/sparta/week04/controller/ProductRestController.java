@@ -16,6 +16,7 @@ import java.util.List;
 public class ProductRestController {
 
     private final ProductRepository productRepository;
+
     @GetMapping("/api/products")
     public List<Product> readProducts(){
         return productRepository.findAll();
