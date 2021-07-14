@@ -42,6 +42,26 @@ function numberWithCommas(x) {
 //////////////////////////////////////////////////////////////////////////////////////////
 
 function execSearch() {
+    $('#search-result-box').empty();
+    let query = $('#query').val();
+    if(query ==''){
+        alert('검색어를 입력해주세요');
+        $('#query').focus();
+    }
+
+    $.ajax({
+        type:"GET",
+        url:`/api/search?query=${query}`,
+        success:function(res){
+            for(i=0;i<res.length;i++){
+                let itemDto = res[i];
+                let tempHtml = addHTML(itemDto);
+                $('#search-result-box').append(tempHtml);
+            }
+        }
+    })
+
+
     /**
      * 검색어 input id: query
      * 검색결과 목록: #search-result-box
@@ -60,7 +80,21 @@ function addHTML(itemDto) {
      * image, title, lprice, addProduct 활용하기
      * 참고) onclick='addProduct(${JSON.stringify(itemDto)})'
      */
-    return ``
+    return `<div class="search-itemDto">
+            <div class="search-itemDto-left">
+                <img src="${itemDto.image}" alt="">
+            </div>
+            <div class="search-itemDto-center">
+                <div>${itemDto.title}</div>
+                <div class="price">
+                    ${numberWithCommas(itemDto.lprice)}
+                    <span class="unit">원</span>
+                </div>
+            </div>
+            <div class="search-itemDto-right">
+                <img src="images/icon-save.png" alt="" onclick='addProduct(${JSON.stringify(itemDto)})'>
+            </div>
+        </div>`
 }
 
 function addProduct(itemDto) {
