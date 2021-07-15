@@ -107,6 +107,7 @@ function addProduct(itemDto) {
         success: function (res) {
             $('#container').addClass('active');
             targetId = res.id;
+            showProduct();
         }
     })
     /**
@@ -120,6 +121,19 @@ function addProduct(itemDto) {
 }
 
 function showProduct() {
+    $('#product-container').empty();
+    $.ajax({
+        type:"GET",
+        url:"/api/products",
+        success:function (res){
+            for (i = 0; i < res.length; i++) {
+                let product = res[i];
+                let tempHtml2 = addProductItem(product);
+                $('#product-container').append(tempHtml2);
+                console.log(tempHtml2);
+            }
+        }
+    })
     /**
      * 관심상품 목록: #product-container
      * 검색결과 목록: #search-result-box
@@ -132,7 +146,21 @@ function showProduct() {
 
 function addProductItem(product) {
     // link, image, title, lprice, myprice 변수 활용하기
-    return ``;
+    return `<div class="search-itemDto">
+            <div class="search-itemDto-left">
+                <img src="${product.image}" alt="">
+            </div>
+            <div class="search-itemDto-center">
+                <div>${product.title}</div>
+                <div class="price">
+                    ${product.lprice}
+                    <span class="unit">원</span>
+                </div>
+            </div>
+            <div class="search-itemDto-right">
+                <!--<p onclick='addProduct()'><i class="far fa-heart"></i></p>--><img src="images/icon-save.png" alt="" onclick='addProduct()'>
+            </div>
+        </div>`;
 }
 
 function setMyprice() {
