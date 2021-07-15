@@ -42,3 +42,10 @@
 
 ### 구현
 1.Product, ProductRepository, TimeStamped, ProductRestController 생성
+    
+    
+### 스케줄러 어노테이션
+// 초, 분, 시, 일, 월, 주 순서
+    @Scheduled(cron = "0 0 1 * * *")
+
+메인에 @EnableScheduling 써서 사용해 주어야 한다.
