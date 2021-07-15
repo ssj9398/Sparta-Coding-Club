@@ -44,16 +44,16 @@ function numberWithCommas(x) {
 function execSearch() {
     $('#search-result-box').empty();
     let query = $('#query').val();
-    if(query ==''){
+    if (query == '') {
         alert('검색어를 입력해주세요');
         $('#query').focus();
     }
 
     $.ajax({
-        type:"GET",
-        url:`/api/search?query=${query}`,
-        success:function(res){
-            for(i=0;i<res.length;i++){
+        type: "GET",
+        url: `/api/search?query=${query}`,
+        success: function (res) {
+            for (i = 0; i < res.length; i++) {
                 let itemDto = res[i];
                 let tempHtml = addHTML(itemDto);
                 $('#search-result-box').append(tempHtml);
@@ -98,6 +98,17 @@ function addHTML(itemDto) {
 }
 
 function addProduct(itemDto) {
+
+    $.ajax({
+        type: "POST",
+        url: "/api/products",
+        contentType: "application/json",
+        data: JSON.stringify(itemDto),
+        success: function (res) {
+            $('#container').addClass('active');
+            targetId = res.id;
+        }
+    })
     /**
      * modal 뜨게 하는 법: $('#container').addClass('active');
      * data를 ajax로 전달할 때는 두 가지가 매우 중요
