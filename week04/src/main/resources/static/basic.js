@@ -122,7 +122,7 @@ function addProduct(itemDto) {
 
 function showProduct() {
     $('#product-container').empty();
-    $('#search-result-box').empty();
+    //$('#search-result-box').empty();
     $.ajax({
         type: "GET",
         url: "/api/products",
@@ -147,21 +147,23 @@ function showProduct() {
 
 function addProductItem(product) {
     // link, image, title, lprice, myprice 변수 활용하기
-    return `<div class="search-itemDto">
-            <div class="search-itemDto-left">
-                <img src="${product.image}" alt="">
-            </div>
-            <div class="search-itemDto-center">
-                <div>${product.title}</div>
-                <div class="price">
-                    ${numberWithCommas(product.lprice)}
-                    <span class="unit">원</span>
+    return `<div class="product-card" onclick="window.location.href='${product.link}'">
+                <div class="card-header">
+                    <img src="${product.image}"
+                         alt="">
                 </div>
-            </div>
-            <div class="isgood ${product.lprice > product.myprice ? 'none' : ''}">
+                <div class="card-body">
+                    <div class="title">
+                        ${product.title}
+                    </div>
+                    <div class="lprice">
+                        <span>${numberWithCommas(product.lprice)}</span>원
+                    </div>
+                    <div class="isgood ${product.lprice > product.myprice ? 'none' : ''}">
                         최저가
-            </div>
-        </div>`;
+                    </div>
+                </div>
+            </div>`;
 }
 
 function setMyprice() {
@@ -177,4 +179,22 @@ function setMyprice() {
      * 5, 성공적으로 등록되었음을 알리는 alert를 띄운다.
      * 6. 창을 새로고침한다. window.location.reload();
      */
+
+    let myprice = $('#myprice').val();
+    if (myprice == '') {
+        alert('올바른 금액을 입력하세요');
+        return;
+    }
+
+    $.ajax({
+        type: "PUT",
+        url: `/api/products/${targetId}`,
+        contentType: "application/json",
+        data: JSON.stringify({myprice: myprice}),
+        success: function (res) {
+            $('#container').removeClass('active');
+            alert('등록 완료');
+            window.location.reload();
+        }
+    })
 }
