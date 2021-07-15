@@ -122,10 +122,11 @@ function addProduct(itemDto) {
 
 function showProduct() {
     $('#product-container').empty();
+    $('#search-result-box').empty();
     $.ajax({
-        type:"GET",
-        url:"/api/products",
-        success:function (res){
+        type: "GET",
+        url: "/api/products",
+        success: function (res) {
             for (i = 0; i < res.length; i++) {
                 let product = res[i];
                 let tempHtml2 = addProductItem(product);
@@ -153,12 +154,12 @@ function addProductItem(product) {
             <div class="search-itemDto-center">
                 <div>${product.title}</div>
                 <div class="price">
-                    ${product.lprice}
+                    ${numberWithCommas(product.lprice)}
                     <span class="unit">원</span>
                 </div>
             </div>
-            <div class="search-itemDto-right">
-                <!--<p onclick='addProduct()'><i class="far fa-heart"></i></p>--><img src="images/icon-save.png" alt="" onclick='addProduct()'>
+            <div class="isgood ${product.lprice > product.myprice ? 'none' : ''}">
+                        최저가
             </div>
         </div>`;
 }
