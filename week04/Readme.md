@@ -50,8 +50,8 @@
 
 메인에 @EnableScheduling 써서 사용해 주어야 한다.
     
-    ![image](https://user-images.githubusercontent.com/48196352/125892730-31cf103f-ca50-4682-8b73-cbe36fb76611.png)
+![image](https://user-images.githubusercontent.com/48196352/125892730-31cf103f-ca50-4682-8b73-cbe36fb76611.png)
     
-    ![image](https://user-images.githubusercontent.com/48196352/125892753-5f4568c4-e6ee-4988-9cff-e66bffa7903b.png)
+![image](https://user-images.githubusercontent.com/48196352/125892753-5f4568c4-e6ee-4988-9cff-e66bffa7903b.png)
 
 
