@@ -1,3 +1,6 @@
+# 완성 url
+- http://selectshop.govpped.com
+
 ## 네이버 나만의 셀렉샵
 
 - 네이버 api : https://developers.naver.com/products/intro/plan/
