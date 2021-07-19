@@ -48,7 +48,7 @@ public class ProductService {
             throw new IllegalArgumentException("유효하지 않은 관심 가격입니다. 최소 " + MIN_PRICE + " 원 이상으로 설정해 주세요.");
         }
 
-        product.updateMyPrice(myPrice);
+        product.updateMyPrice(requestDto);
         return product;
     }
 }
