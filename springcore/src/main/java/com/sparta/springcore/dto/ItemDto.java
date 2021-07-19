@@ -1,4 +1,4 @@
-package com.sparta.springcore;
+package com.sparta.springcore.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
