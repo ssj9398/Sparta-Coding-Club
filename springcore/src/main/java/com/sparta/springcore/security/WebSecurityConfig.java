@@ -14,9 +14,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
 
         http.authorizeRequests()
+                // image 폴더를 login 없이 허용
+                .antMatchers("/images/**").permitAll()
+                // css 폴더를 login 없이 허용
+                .antMatchers("/css/**").permitAll()
+                // 그 외 모든 요청은 인증과정 필요
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+                .loginPage("/user/login")
+                .loginProcessingUrl("/user/login")
                 .defaultSuccessUrl("/")
                 .permitAll()
                 .and()
