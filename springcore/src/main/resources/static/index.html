@@ -15,8 +15,17 @@
     <title>나만의 셀렉샵</title>
 </head>
 <body>
-<div class="header">
-    Select Shop
+<div class="header" style="position:relative;">
+    <div id="header-title-login-user">
+        <span th:text="${username}"></span> 님의
+    </div>
+    <div id="header-title-select-shop">
+        Select Shop
+    </div>
+
+    <a id="logout-text" href="/user/logout">
+        로그아웃
+    </a>
 </div>
 <div class="nav">
     <div class="nav-see active">
