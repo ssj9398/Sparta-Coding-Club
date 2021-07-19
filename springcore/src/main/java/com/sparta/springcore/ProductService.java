@@ -1,5 +1,7 @@
 package com.sparta.springcore;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,9 +10,10 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     // 생성자: ProductService() 가 생성될 때 호출됨
-    public ProductService() {
+    @Autowired
+    public ProductService(ProductRepository productRepository) {
         // 멤버 변수 생성
-        this.productRepository = new ProductRepository();
+        this.productRepository = productRepository;
     }
 
     public List<Product> getProducts() throws SQLException {

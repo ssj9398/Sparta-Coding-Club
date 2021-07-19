@@ -1,21 +1,21 @@
 package com.sparta.springcore;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.sql.SQLException;
 import java.util.List;
 
-@RequiredArgsConstructor // final로 선언된 멤버 변수를 자동으로 생성합니다.
 @RestController // JSON으로 데이터를 주고받음을 선언합니다.
 public class ProductController {
     // 멤버 변수 선언
     private final ProductService productService;
 
     // 생성자: ProductController() 가 생성될 때 호출됨
-    public ProductController() {
+    @Autowired
+    public ProductController(ProductService productService) {
         // 멤버 변수 생성
-        productService = new ProductService();
+        this.productService = productService;
     }
 
     // 등록된 전체 상품 목록 조회
