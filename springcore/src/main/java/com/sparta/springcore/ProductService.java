@@ -19,6 +19,10 @@ public class ProductService {
     }
 
     public Product updateProduct(Long id, ProductMypriceRequestDto requestDto) throws SQLException {
+        if(requestDto.getMyprice()<0){
+            throw new IllegalAccessError("희망 최저가는 0 이하가 될 수 없습니다.");
+        }
+
         ProductRepository productRepository = new ProductRepository();
         Product product = productRepository.getProduct(id);
         if (product == null) {
