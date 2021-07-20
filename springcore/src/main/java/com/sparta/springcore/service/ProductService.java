@@ -51,4 +51,9 @@ public class ProductService {
         product.updateMyPrice(requestDto);
         return product;
     }
+
+    // 모든 상품 조회 (관리자용)
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
 }

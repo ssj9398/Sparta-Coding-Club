@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -22,7 +22,6 @@
     <div id="header-title-select-shop">
         Select Shop
     </div>
-
     <a id="logout-text" href="/user/logout">
         로그아웃
     </a>
@@ -37,7 +36,6 @@
 </div>
 <div id="see-area">
     <div id="product-container">
-
     </div>
 </div>
 <div id="search-area">
@@ -46,7 +44,6 @@
         <!--    <img src="images/icon-search.png" alt="">-->
     </div>
     <div id="search-result-box">
-
     </div>
     <div id="container" class="popup-container">
         <div class="popup">
@@ -62,5 +59,6 @@
         </div>
     </div>
 </div>
+<div th:if="${admin}" id="admin" ></div>
 </body>
 </html>

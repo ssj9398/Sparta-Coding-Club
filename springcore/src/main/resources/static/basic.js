@@ -29,16 +29,20 @@ $(document).ready(function () {
     $('#see-area').show();
     $('#search-area').hide();
 
-    showProduct();
+    if ($('#admin').length === 1) {
+        showProduct(true);
+    } else {
+        showProduct();
+    }
 })
 
-function showProduct() {
+function showProduct(isAdmin = false) {
     // 1. GET /api/products 요청
     // 2. #product-container(관심상품 목록), #search-result-box(검색결과 목록) 비우기
     // 3. for 문 마다 addProductItem 함수 실행시키고 HTML 만들어서 #product-container 에 붙이기
     $.ajax({
         type: 'GET',
-        url: '/api/products',
+        url: isAdmin ? '/api/admin/products' : '/api/products',
         success: function (response) {
             $('#product-container').empty();
             $('#search-result-box').empty();
