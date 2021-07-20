@@ -4,6 +4,7 @@ import com.sparta.springcore.dto.SignupRequestDto;
 import com.sparta.springcore.model.User;
 import com.sparta.springcore.model.UserRole;
 import com.sparta.springcore.repository.UserRepository;
+import com.sparta.springcore.security.UserDetailsImpl;
 import com.sparta.springcore.security.kakao.KakaoOAuth2;
 import com.sparta.springcore.security.kakao.KakaoUserInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -76,18 +77,26 @@ public class UserService {
 
         // 카카오 정보로 회원가입
         if (kakaoUser == null) {
-            // 패스워드 인코딩
-            String encodedPassword = passwordEncoder.encode(password);
-            // ROLE = 사용자
-            UserRole role = UserRole.USER;
+            User SameEmail = userRepository.findByEmail(email).orElse(null);
+            if (SameEmail != null) {
+                kakaoUser = SameEmail;
+                kakaoUser.setKakaoId(kakaoId);
+                userRepository.save(kakaoUser);
 
-            kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
-            userRepository.save(kakaoUser);
+            } else {
+                // 패스워드 인코딩
+                String encodedPassword = passwordEncoder.encode(password);
+                // ROLE = 사용자
+                UserRole role = UserRole.USER;
+
+                kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
+                userRepository.save(kakaoUser);
+            }
+
+            // 스프링 시큐리티 통해 로그인 처리
+            UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         }
-
-        // 로그인 처리
-        Authentication kakaoUsernamePassword = new UsernamePasswordAuthenticationToken(username, password);
-        Authentication authentication = authenticationManager.authenticate(kakaoUsernamePassword);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 }
