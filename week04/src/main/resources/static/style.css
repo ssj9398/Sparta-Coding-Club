@@ -278,8 +278,14 @@ button {
 }
 
 @media screen and (max-width: 532px) {
-    .query, #search-result-box, #see-area {
+    .query, #search-result-box, #see-area , #see-area{
         width:100%;
     }
+    #search-area, input#query{
+        width:90%;
+    }
+
 }
+
+
 
