@@ -65,7 +65,7 @@ public class UserProductIntegrationTest {
     @DisplayName("회원가입")
     void test2() {
         // given
-        String username = "손성진";
+        String username = "손성진2";
         String password = "1q2w3e4r";
         String email = "sjs939883@gmail.com";
         boolean admin = false;

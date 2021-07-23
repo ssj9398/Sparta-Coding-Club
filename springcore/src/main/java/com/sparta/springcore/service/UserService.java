@@ -96,7 +96,6 @@ public class UserService {
                 kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
                 userRepository.save(kakaoUser);
             }
-<<<<<<< HEAD
 
 
         }
@@ -104,14 +103,9 @@ public class UserService {
         UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
-=======
-            System.out.print("시큐리티 로그인 전");
-            // 스프링 시큐리티 통해 로그인 처리
-        }
-            UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
-            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authentication);
 
->>>>>>> cbd9f3e2168536bce3ffa3222adff07cbe9084de
+        System.out.print("시큐리티 로그인 전");
+        // 스프링 시큐리티 통해 로그인 처리
     }
+
 }
