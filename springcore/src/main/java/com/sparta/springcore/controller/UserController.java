@@ -51,6 +51,7 @@ public class UserController {
     @GetMapping("/user/kakao/callback")
     public String kakaoLogin(String code) {
         // authorizedCode: 카카오 서버로부터 받은 인가 코드
+        System.out.println("로그인 컨트롤러");
         userService.kakaoLogin(code);
 
         return "redirect:/";

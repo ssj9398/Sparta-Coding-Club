@@ -61,6 +61,7 @@ public class UserService {
 
     public void kakaoLogin(String authorizedCode) {
         // 카카오 OAuth2 를 통해 카카오 사용자 정보 조회
+        System.out.println("서비스 진입");
         KakaoUserInfo userInfo = kakaoOAuth2.getUserInfo(authorizedCode);
         Long kakaoId = userInfo.getId();
         String nickname = userInfo.getNickname();
@@ -75,16 +76,18 @@ public class UserService {
         // DB 에 중복된 Kakao Id 가 있는지 확인
         User kakaoUser = userRepository.findByKakaoId(kakaoId)
                 .orElse(null);
-
+        System.out.println("중복 id확인 후");
         // 카카오 정보로 회원가입
         if (kakaoUser == null) {
+            System.out.println("카카오 사용자 null 체크");
             User SameEmail = userRepository.findByEmail(email).orElse(null);
             if (SameEmail != null) {
+                System.out.println("이메일 중복 체크");
                 kakaoUser = SameEmail;
                 kakaoUser.setKakaoId(kakaoId);
                 userRepository.save(kakaoUser);
-
             } else {
+                System.out.println("비밀번호 인코딩");
                 // 패스워드 인코딩
                 String encodedPassword = passwordEncoder.encode(password);
                 // ROLE = 사용자
@@ -93,6 +96,7 @@ public class UserService {
                 kakaoUser = new User(nickname, encodedPassword, email, role, kakaoId);
                 userRepository.save(kakaoUser);
             }
+<<<<<<< HEAD
 
 
         }
@@ -100,5 +104,14 @@ public class UserService {
         UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
+=======
+            System.out.print("시큐리티 로그인 전");
+            // 스프링 시큐리티 통해 로그인 처리
+        }
+            UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+
+>>>>>>> cbd9f3e2168536bce3ffa3222adff07cbe9084de
     }
 }
