@@ -30,9 +30,9 @@ public class KakaoOAuth2 {
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("grant_type", "authorization_code");
         params.add("client_id", "ac8b41df74e658cf1ef4aaa6aee33500");
-        params.add("redirect_uri", "http://localhost:8080/user/kakao/callback");
+        params.add("redirect_uri", "http://49.142.102.204:8080/user/kakao/callback");
         params.add("code", authorizedCode);
-
+        System.out.print(params);
         // HttpHeader와 HttpBody를 하나의 오브젝트에 담기
         RestTemplate rt = new RestTemplate();
         HttpEntity<MultiValueMap<String, String>> kakaoTokenRequest =

@@ -13,23 +13,24 @@
 </head>
 <body>
 <div id="login-form">
-  <div id="login-title">Log into Select Shop</div>
-  <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=ac8b41df74e658cf1ef4aaa6aee33500&redirect_uri=http://localhost:8080/user/kakao/callback&response_type=code'">
+  <div id="login-title">Select Shop</div>
+
+  <div th:if="${loginError}" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
+  <form action="/user/login" method="post">
+    <div class="login-id-label">아이디</div>
+    <input type="text" name="username" class="login-input-box" pattern="^([a-z0-9_]){6,50}$" placeholder="ID 입력">
+
+    <div class="login-id-label">비밀번호</div>
+    <input type="password" name="password" class="login-input-box" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*()_-+=[]{}~?:;`|/]).{6,50}$" placeholder="PW 입력">
+
+    <button id="login-id-submit">로그인</button>
+  </form>
+  <button id="login-kakao-btn" onclick="location.href='https://kauth.kakao.com/oauth/authorize?client_id=ac8b41df74e658cf1ef4aaa6aee33500&redirect_uri=http://49.142.102.204:8080/user/kakao/callback&response_type=code'">
     카카오로 로그인하기
   </button>
   <button id="login-id-btn" onclick="location.href='/user/signup'">
     회원 가입하기
   </button>
-  <div th:if="${loginError}" class="alert alert-danger" role="alert">로그인에 실패하였습니다.</div>
-  <form action="/user/login" method="post">
-    <div class="login-id-label">아이디</div>
-    <input type="text" name="username" class="login-input-box">
-
-    <div class="login-id-label">비밀번호</div>
-    <input type="password" name="password" class="login-input-box">
-
-    <button id="login-id-submit">로그인</button>
-  </form>
 </div>
 </body>
 </html>
