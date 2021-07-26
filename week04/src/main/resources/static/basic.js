@@ -55,8 +55,8 @@ function execSearch() {
         success: function (res) {
             for (i = 0; i < res.length; i++) {
                 let itemDto = res[i];
-                if(mactchMedia(""))
-                let tempHtml = addHTML(itemDto);
+                //if(mactchMedia(""))
+                    let tempHtml = addHTML(itemDto);
                 $('#search-result-box').append(tempHtml);
             }
         }
