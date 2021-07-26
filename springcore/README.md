@@ -158,3 +158,128 @@ public interface UserRepository extends JpaRepository<User, Long> {
 existUser.setKakaoId(kakaoId);
 userRepository.save(existUser);
 ```
+
+## 테스트
+### JUnit 단위테스트
+- 프로그램을 작은 단위로 쪼개서 각 단위가 정확하게 동작하는지 검사
+
+1. JUnit 사용 설정
+- build.gradle 의존성 주입
+```java
+dependencies {
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+    useJUnitPlatform()
+}
+```
+
+2. 테스트 파일 생성
+- 테스트 하려는 파일로 접근하여 Generate -> Test 생성해준다.
+- 테스트 코드를 작성해 준다.
+```java
+package com.sparta.springcore.model;
+
+import com.sparta.springcore.dto.ProductRequestDto;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+class ProductTest {
+    @Test
+    @DisplayName("정상 케이스")
+    void createProduct_Normal() {
+        // given
+        Long userId = 100L;
+        String title = "오리온 꼬북칩 초코츄러스맛 160g";
+        String image = "https://shopping-phinf.pstatic.net/main_2416122/24161228524.20200915151118.jpg";
+        String link = "https://search.shopping.naver.com/gate.nhn?id=24161228524";
+        int lprice = 2350;
+
+        ProductRequestDto requestDto = new ProductRequestDto(
+                title,
+                image,
+                link,
+                lprice
+        );
+
+        // when
+        Product product = new Product(requestDto, userId);
+
+        // then
+        assertNull(product.getId());
+        assertEquals(userId, product.getUserId());
+        assertEquals(title, product.getTitle());
+        assertEquals(image, product.getImage());
+        assertEquals(link, product.getLink());
+        assertEquals(lprice, product.getLprice());
+        assertEquals(0, product.getMyprice());
+    }
+}
+```
+
+### Edge 케이스를 고려한 단위 테스트
+1. 다양한 테스트 Edge 케이스 고려
+- null의 경우
+- ex)
+```
+1) 상품명이 null 로 들어올 경우
+2) 상품명이 빈 문자열인 경우에도 저장을 해야 할까? 
+    (UI 에는 어떻게 표시될까?)
+```
+- 협의를 통한 처리
+
+2. TDD(Test-Driven Development)
+- AS-IS) 설계 → 개발 → 테스트 **(→ 설계 수정)** 순서를
+- TO-BE) 설계 → 테스트 **(→설계 수정)** → 개발로 변경
+![image](https://user-images.githubusercontent.com/48196352/126905209-bc4d686b-b1b1-4300-b429-8f51923bb242.png)
+
+### Mock object 단위 테스트
+- Mockito framework: Mock 객체를 쉽게 만들 수 있는 방법 제공
+
+### 통합테스트
+1. 단위 테스트 (Unit Test)
+    - 하나의 모듈이나 클래스에 대해 세밀한 부분까지 테스트 가능
+    - 모듈 간에 상호 작용 검증 못함
+2. 통합 테스트 (Integration Test)
+    - 두 개 이상의 모듈이 연결된 상태를 테스트
+    - 모듈 간의 연결에서 발생하는 에러 검증 가능
+3. E2E 테스트 (End to End Test)
+    - 실제 사용자의 실행 환경과 거의 동일한 환경에서 테스트 진행 (=블랙박스 테스팅)
+
+### 스프링부트를 이용한 통합 테스트
+- 통합 테스트
+    - 여러 단위 테스트를 하나의 통합된 테스트로 수행
+    - Controller → Service → Repository
+- 단위 테스트 시 스프링 동작 안 함
+
+    예제 코드)
+
+    ```java
+    class ProductTest {
+
+        @Autowired
+        ProductService productService;
+
+    		// ...
+
+    		@Test
+        @DisplayName("정상 케이스")
+        void createProduct_Normal() {
+    				// ...
+
+    				****// 에러 발생! productService 가 null
+            Product productByService  = productService.createProduct(requestDto, userId);
+    ```
+
+- "@SpringBootTest"
+    - 스프링 부트가 제공하는 테스트 어노테이션.
+    - 테스트 수행 시 스프링이 동작함
+        - Spring IoC 사용 가능
+        - Repository 사용해 DB CRUD 가능
+    - End to End 테스트도 가능
+        - **Client 요청** → Controller → Service → Repository → **Client 응답**
+- @Order(1), @Order(2), ...
+    - 테스트의 순서를 정할 수 있음
