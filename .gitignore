@@ -2,3 +2,6 @@
 
 # database
 /application.properties
+/myselectdb.lock.db
+/myselectdb.mv.db
+/myselectdb.trace.db
