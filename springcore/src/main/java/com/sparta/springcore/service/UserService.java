@@ -99,6 +99,7 @@ public class UserService {
 
 
         }
+        System.out.printf("test");
         // 스프링 시큐리티 통해 로그인 처리
         UserDetailsImpl userDetails = new UserDetailsImpl(kakaoUser);
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

@@ -11,9 +11,8 @@ import com.sparta.springcore.service.UserService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.domain.Page;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,19 +30,20 @@ public class UserProductIntegrationTest {
     @Autowired
     ProductService productService;
 
+
     Long userId = null;
     Product createdProduct = null;
     int updatedMyPrice = -1;
 
     @Test
     @Order(1)
-    @DisplayName("회원 가입 없이 상품 등록 시 에러")
+    @DisplayName("회원 가입 정보 없이 상품 등록 시 에러발생")
     void test1() {
         // given
         String title = "Apple <b>에어팟</b> 2세대 유선충전 모델 (MV7N2KH/A)";
         String imageUrl = "https://shopping-phinf.pstatic.net/main_1862208/18622086330.20200831140839.jpg";
         String linkUrl = "https://search.shopping.naver.com/gate.nhn?id=18622086330";
-        int lPrice = 10000;
+        int lPrice = 77000;
         ProductRequestDto requestDto = new ProductRequestDto(
                 title,
                 imageUrl,
@@ -57,17 +57,17 @@ public class UserProductIntegrationTest {
         });
 
         // then
-        assertEquals("회원 정보가 유효하지 않습니다.", exception.getMessage());
+        assertEquals("회원 Id 가 유효하지 않습니다.", exception.getMessage());
     }
 
     @Test
     @Order(2)
-    @DisplayName("회원가입")
+    @DisplayName("회원 가입")
     void test2() {
         // given
-        String username = "손성진2";
-        String password = "1q2w3e4r";
-        String email = "sjs939883@gmail.com";
+        String username = "르탄이1";
+        String password = "nobodynoboy";
+        String email = "retan1@spartacodingclub.kr";
         boolean admin = false;
 
         SignupRequestDto signupRequestDto = new SignupRequestDto();
@@ -80,10 +80,10 @@ public class UserProductIntegrationTest {
         User user = userService.registerUser(signupRequestDto);
 
         // then
+        assertNotNull(user.getId());
         assertEquals(username, user.getUsername());
         assertTrue(passwordEncoder.matches(password, user.getPassword()));
         assertEquals(email, user.getEmail());
-        assertNotNull(user.getId());
         assertEquals(UserRole.USER, user.getRole());
 
         userId = user.getId();
@@ -91,7 +91,7 @@ public class UserProductIntegrationTest {
 
     @Test
     @Order(3)
-    @DisplayName("신규 관심상품 등록")
+    @DisplayName("가입한 회원 Id 로 신규 관심상품 등록")
     void test3() {
         // given
         String title = "Apple <b>에어팟</b> 2세대 유선충전 모델 (MV7N2KH/A)";
@@ -145,8 +145,14 @@ public class UserProductIntegrationTest {
     @DisplayName("회원이 등록한 모든 관심상품 조회")
     void test5() {
         // given
+        int page = 0;
+        int size = 10;
+        String sortBy = "id";
+        boolean isAsc = false;
+
         // when
-        List<Product> productList = productService.getProducts(userId);
+        Page<Product> productList = productService.getProducts(userId, page, size, sortBy, isAsc);
+
         // then
         // 1. 전체 상품에서 테스트에 의해 생성된 상품 찾아오기 (상품의 id 로 찾음)
         Long createdProductId = this.createdProduct.getId();
