@@ -1,6 +1,13 @@
 window.addEventListener('load', () => {
     getMessages();
+    //RefreshLoad();
+
 });
+
+function RefreshLoad(){
+
+    RefreshLoad();
+}
 
 //메모 내용 체크
 function isValidContents(contents) {
@@ -56,6 +63,7 @@ function hideEdits(id) {
 
 // 메모 불러오기
 function getMessages() {
+    setTimeout('location.reload()',5000);
     $('#cards-box').empty();
     $.ajax({
         type: "GET",
