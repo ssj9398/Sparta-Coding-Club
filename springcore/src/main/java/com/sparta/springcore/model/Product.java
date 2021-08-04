@@ -1,22 +1,19 @@
 package com.sparta.springcore.model;
 
 import com.sparta.springcore.Timestamped;
-import com.sparta.springcore.dto.ItemDto;
-import com.sparta.springcore.dto.ProductMypriceRequestDto;
 import com.sparta.springcore.dto.ProductRequestDto;
 import com.sparta.springcore.util.URLValidator;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.
 @NoArgsConstructor // 기본 생성자를 만들어줍니다.
 @Entity // DB 테이블 역할을 합니다.
 public class Product extends Timestamped {
-
     // ID가 자동으로 생성 및 증가합니다.
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -41,7 +38,9 @@ public class Product extends Timestamped {
     @Column(nullable = false)
     private Long userId;
 
-    // unit test
+    @ManyToMany
+    private List<Folder> folderList;
+
     public Product(ProductRequestDto requestDto, Long userId) {
         // 입력값 Validation
         if (userId == null || userId < 0) {
@@ -73,11 +72,12 @@ public class Product extends Timestamped {
         this.myprice = 0;
     }
 
-
-
-    public void updateMyPrice(ProductMypriceRequestDto productMypriceRequestDto) {
-        this.myprice = productMypriceRequestDto.getMyprice();
+    // 관심 상품의 가격 변경 시 사용합니다.
+    public void updateMyPrice(int price) {
+        this.myprice = price;
     }
 
-
+    public void addFolder(Folder folder) {
+        this.folderList.add(folder);
+    }
 }

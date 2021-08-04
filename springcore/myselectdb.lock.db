@@ -1,6 +1,6 @@
 #FileLock
-#Wed Aug 04 22:10:38 KST 2021
+#Wed Aug 04 22:32:28 KST 2021
 hostName=DESKTOP-MK956BT
-id=17b114987a59abe9c85fc2eed5aba500e78c8f4148e
+id=17b115d83bc363b4edc7840adc16232e9d81b99d31d
 method=file
-server=192.168.0.3\:62496
+server=192.168.0.3\:50073
