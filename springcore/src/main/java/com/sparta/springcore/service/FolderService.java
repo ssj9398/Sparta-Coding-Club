@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,13 +35,27 @@ public class FolderService {
     }
 
     public List<Folder> createFolders(List<String> folderNameList, User user) {
+        List<Folder> existFolder = folderRepository.findAllByUserAndNameIn(user, folderNameList);
         List<Folder> folderList = new ArrayList<>();
         for (String folderName : folderNameList) {
-            Folder folder = new Folder(folderName, user);
-            folderList.add(folder);
+            if (!isExistFolderName(folderName, existFolder)) {
+                Folder folder = new Folder(folderName, user);
+                folderList.add(folder);
+            }
         }
         folderList = folderRepository.saveAll(folderList);
         return folderList;
+    }
+
+    public boolean isExistFolderName(String folderName, List<Folder> existFolderList) {
+        // 기존 폴더 리스트에서 folder name 이 있는지?
+        for (Folder existFolder : existFolderList) {
+            if (existFolder.getName().equals(folderName)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     // 회원 ID 가 소유한 폴더에 저장되어 있는 상품들 조회
