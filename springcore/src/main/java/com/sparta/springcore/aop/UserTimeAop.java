@@ -45,9 +45,15 @@ public class UserTimeAop {
                 UserTime userTime = userTimeRepository.findByUser(loginUser);
                 if (userTime != null) {
                     // 로그인 회원의 기록이 있으면
+                    //API 수행시간
                     long totalTime = userTime.getTotalTime();
                     totalTime = totalTime + runTime;
-                    userTime.updateTotalTime(totalTime);
+
+                    //API 수행횟수
+                    long totalCount = userTime.getTotalCount();
+                    totalCount++;
+
+                    userTime.updateTotalTime(totalTime, totalCount);
                 } else {
                     // 로그인 회원의 기록이 없으면
                     userTime = new UserTime(loginUser, runTime);
