@@ -155,6 +155,10 @@ button {
     padding-left: 10px;
 }
 
+.add-folder-btn {
+    width: 330px;
+}
+
 .popup button.close {
     position: absolute;
     top: 15px;
@@ -167,6 +171,14 @@ button {
 
 .popup button.cta {
     width: 369.1px;
+    height: 43.9px;
+    border-radius: 2px;
+    background-color: #15aabf;
+    border: none;
+}
+
+.popup button.cta2 {
+    width: 352.1px;
     height: 43.9px;
     border-radius: 2px;
     background-color: #15aabf;
@@ -289,10 +301,11 @@ button {
 }
 
 .pagination {
+    font-size: 14px;
     margin-top: 12px;
     margin-left: auto;
     margin-right: auto;
-    width: 53%;
+    width: 65%;
 }
 
 .folder-active {
@@ -317,6 +330,7 @@ button {
     white-space: normal;
 }
 .folder-bar .folder-bar-item {
+    font-size: 17px;
     padding: 8px 16px;
     float: left;
     width: auto;
@@ -372,7 +386,7 @@ button {
 
 #login-kakao-btn {
     border-width: 0;
-    margin: 20px 0 20px;
+    margin: 96px 0 8px;
     width: 393px;
     height: 62px;
     flex-grow: 0;
@@ -485,12 +499,6 @@ button {
     letter-spacing: 0.36px;
     text-align: center;
     color: #ffffff;
-}
-
-#login-id-submit,
-#login-kakao-btn,
-#login-id-btn{
-    cursor:wait;
 }
 
 @media ( max-width: 768px ) {
@@ -656,6 +664,14 @@ button {
         border: none;
     }
 
+    .popup button.cta2 {
+        width: 302.1px;
+        height: 43.9px;
+        border-radius: 2px;
+        background-color: #15aabf;
+        border: none;
+    }
+
     #search-area, #see-area {
         width: 330px;
         margin: auto;
@@ -771,7 +787,6 @@ button {
         background-color: #e9ecef;
         border: none;
 
-        background-image: url('images/kakao_login_medium_narrow.png');
         background-repeat: no-repeat;
         background-position: right 10px center;
         background-size: 20px 20px;
@@ -783,20 +798,24 @@ button {
     position: relative;
     display: inline-block;
 }
+
 input {
     border: 1px solid transparent;
     background-color: #f1f1f1;
     padding: 10px;
     font-size: 16px;
 }
+
 input[type=text] {
     background-color: #f1f1f1;
     /*width: 100%;*/
 }
+
 input[type=password] {
     background-color: #f1f1f1;
     /*width: 100%;*/
 }
+
 input[type=submit] {
     background-color: DodgerBlue;
     color: #fff;
