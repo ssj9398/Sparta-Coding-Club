@@ -35,7 +35,7 @@ public class ProductController {
     ) {
         Long userId = userDetails.getUser().getId();
         page = page - 1;
-        return productService.getProducts(userId, page , size, sortBy, isAsc);
+        return productService.getProducts(userId, page, size, sortBy, isAsc);
     }
 
     // 신규 상품 등록
@@ -66,7 +66,7 @@ public class ProductController {
             @RequestParam("sortBy") String sortBy,
             @RequestParam("isAsc") boolean isAsc
     ) {
-        return productService.getAllProducts(page , size, sortBy, isAsc);
+        return productService.getAllProducts(page, size, sortBy, isAsc);
     }
 
     // 상품에 폴더 추가
