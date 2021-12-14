@@ -8,100 +8,120 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 
     <title>스파르타코딩클럽 | 부트스트랩 연습하기</title>
 
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+
     <style>
+        * {
+            font-family: 'Jua', sans-serif;
+        }
+
         .wrap {
-            width: 900px;
             margin: auto;
+            width: 900px;
+        }
+
+        .comment {
+            font-weight: bold;
+            color: blue;
+        }
+
+        .posting-box {
+            margin: 10px auto 30px auto;
+            width:500px;
+
+            border: 3px solid black;
+            border-radius: 5px;
+
+            padding: 25px;
         }
     </style>
-
 </head>
 
 <body>
     <div class="wrap">
         <div class="jumbotron">
-            <h1 class="display-4">Hello, world!</h1>
-            <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
-                featured content or information.</p>
+            <h1 class="display-4">나홀로 링크 메모장!</h1>
+            <p class="lead">중요한 링크를 저장해두고, 나중에 볼 수 있는 공간입니다</p>
             <hr class="my-4">
-            <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
             <p class="lead">
-                <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
+                <a class="btn btn-primary btn-lg" href="#" role="button">포스팅박스 열기</a>
             </p>
+        </div>
+        <div class="posting-box">
+            <div class="form-group">
+                <label for="exampleInputEmail1">아티클 URL</label>
+                <input type="email" class="form-control" aria-describedby="emailHelp"
+                    placeholder="">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">간단 코멘트</label>
+                <input type="password" class="form-control" placeholder="">
+            </div>
+            <button type="submit" class="btn btn-primary">기사 저장</button>
         </div>
         <div class="card-columns">
             <div class="card">
                 <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
+                    src="https://d2ur7st6jjikze.cloudfront.net/offer_photos/29590/185689_medium_1525763241.jpg?1525763241"
+                    alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <a href="http://naver.com" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
                 </div>
             </div>
             <div class="card">
                 <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
+                    src="https://d2ur7st6jjikze.cloudfront.net/offer_photos/29590/185689_medium_1525763241.jpg?1525763241"
+                    alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <a href="http://naver.com" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
                 </div>
             </div>
             <div class="card">
                 <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
+                    src="https://d2ur7st6jjikze.cloudfront.net/offer_photos/29590/185689_medium_1525763241.jpg?1525763241"
+                    alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <a href="http://naver.com" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
                 </div>
             </div>
             <div class="card">
                 <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
+                    src="https://d2ur7st6jjikze.cloudfront.net/offer_photos/29590/185689_medium_1525763241.jpg?1525763241"
+                    alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <a href="http://naver.com" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
                 </div>
             </div>
             <div class="card">
                 <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
+                    src="https://d2ur7st6jjikze.cloudfront.net/offer_photos/29590/185689_medium_1525763241.jpg?1525763241"
+                    alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
-                </div>
-            </div>
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://image.theminda.com/data/tg/image/tour/middle/201905/c8aee858ed6e8c34010fe3c4ae9be8a5.jpg"
-                     alt="Card image cap">
-                <div class="card-body">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional
-                        content. This content is a little bit longer.</p>
+                    <a href="http://naver.com" class="card-title">여기 기사 제목이 들어가죠</a>
+                    <p class="card-text">기사의 요약 내용이 들어갑니다. 동해물과 백두산이 마르고 닳도록 하느님이 보우하사 우리나라만세 무궁화 삼천리 화려강산...</p>
+                    <p class="card-text comment">여기에 코멘트가 들어갑니다.</p>
                 </div>
             </div>
         </div>
