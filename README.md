@@ -3,6 +3,7 @@
 2. [Week03](https://github.com/ssj9398/Sparta-Coding-Club/tree/main/week03)
 3. [Week04](https://github.com/ssj9398/Sparta-Coding-Club/tree/main/week04)
 4. [SpringCore](https://github.com/ssj9398/Sparta-Coding-Club/tree/main/springcore)
+5. [Flask](https://github.com/ssj9398/Sparta-Coding-Club/tree/main/Flask)
 
 ## 개발환경
 1. 인텔리제이
