@@ -1,4 +1,5 @@
 ## Ajax, Flask, MongoDb
+## Ajax
 1. Ajax 샘플(Json)
 ```javascript
   $.ajax({
@@ -31,7 +32,7 @@ for gu in gus:
 	print(gu['MSRSTE_NM'], gu['IDEX_MVL'])
 ```
 
-
+## 크롤링 Bs4
 3. 크롤링 (Bs4)
 ```python
 import requests
@@ -87,6 +88,8 @@ soup.select('태그명[속성="값"]')
 # 한 개만 가져오고 싶은 경우
 soup.select_one('위와 동일')
 ```
+
+## pymongo
 
 6. NoSql
 ```
@@ -154,7 +157,8 @@ user = db.users.find_one({'name':'bobby'})
 print(user)
 ```
 
-12. Flask
+## Flask
+12. Flask 기본
 ```
 Flask 서버를 만들 때, 항상
 
