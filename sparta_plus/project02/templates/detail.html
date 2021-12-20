@@ -2,47 +2,153 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function () {
-            //get_list()
-        })
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Sparta Vocabulary Notebook</title>
 
-        function get_list() {
-            $.ajax({
-                type: "GET",
-                url: "http://openapi.seoul.go.kr:8088/6d4d776b466c656533356a4b4b5872/json/RealtimeCityAir/1/99",
-                data: {},
-                success: function (response) {
-                    let rows = response["RealtimeCityAir"]["row"];
-                    console.log(rows)
-                    $("#gu_list").empty()
-                    for(let i=0; i<rows.length; i++){
-                        let gu_name= rows[i]["MSRSTE_NM"]
-                        let gu_mise= rows[i]["IDEX_MVL"]
-                        console.log(gu_name, gu_mise);
-                        let html_temp = `<li>${gu_name}: ${gu_mise}</li>`
-                        $("#gu_list").append(html_temp)
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+          crossorigin="anonymous">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
-                    }
-                }
-            })
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+    <style>
+        .wrap {
+            background-color: RGBA(232, 52, 78, 0.2);
+            min-height: 100vh;
+            padding-bottom: 50px;
         }
-    </script>
+
+        .banner {
+            width: 100%;
+            height: 200px;
+
+            background-color: white;
+            background-image: url('{{ url_for("static", filename="logo_red.png") }}');
+
+            background-position: center;
+            background-size: contain;
+            background-repeat: no-repeat;
+
+            cursor: pointer;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+
+            border: solid 1px gray;
+            border-radius: 10px;
+        }
+
+        span.example {
+            color: gray;
+            font-size: 14px;
+        }
+
+        .btn-sparta {
+            color: #fff;
+            background-color: #e8344e;
+            border-color: #e8344e;
+        }
+
+        .btn-outline-sparta {
+            color: #e8344e;
+            background-color: transparent;
+            background-image: none;
+            border-color: #e8344e;
+        }
+    </style>
+<script>
+    let word = '{{ word }}'
+$(document).ready(function () {
+    //get_definitions()
+})
+
+function get_definitions() {
+    $.ajax({
+        type: "GET",
+        url: `https://owlbot.info/api/v4/dictionary/${word}`,
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Token 438518f183426364e6917218e208b1924a770a20");
+        },
+        data: {},
+        error: function (xhr, status, error) {
+            alert("에러 발생!");
+        },
+        success: function (response) {
+            console.log(response)
+            $("#word").text(response["word"])
+            if(response["pronunciation"] == null){
+                 $("#pronunciation").text("")
+            } else{
+                $("#pronunciation").text(`/${response["pronunciation"]}/`)
+            }
+
+            let definitions = response["definitions"]
+            for(let i= 0; i<definitions.length; i++){
+                let definition = definitions[i]
+                let temp_html =""
+                if(definition["example"]==null){
+                    temp_html = `<div style="padding:10px">
+                                <i>${definition["type"]}</i>
+                                <br>${definition["definition"]}<br>
+                            </div>`
+                }else{
+                    temp_html = `<div style="padding:10px">
+                                <i>${definition["type"]}</i>
+                                <br>${definition["definition"]}<br>
+                                <span class="example">${definition["example"]}</span>
+                            </div>`
+                }
+
+                $("#definitions").append(temp_html)
+            }
+        }
+    })
+}
+</script>
 </head>
 <body>
-<h1>상세페이지</h1>
-<button onclick="window.location.href='/'">메인</button>
-<h3>받은 단어는 {{ word }}</h3>
-<ul id="gu_list">
-    {% for row in rows %}
-    {% set gu_name = row["MSRSTE_NM"] %}
-    {% set gu_mise = row["IDEX_MVL"] %}
-        {% if gu_mise>=60 %}
-    <li>{{ gu_name }} : {{ gu_mise|int }}</li>
-        {% endif %}
-    {% endfor %}
-</ul>
+<div class="wrap">
+    <div class="banner" onclick="window.location.href = '/'">
+    </div>
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end">
+            <div>
+                <h1 id="word" style="display: inline;">{{ result.word }}</h1>
+                {% if result.pronunciation %}
+                <h5 id="pronunciation" style="display: inline;">/{{ result.pronunciation }}/</h5>
+                {% endif %}
+            </div>
+            <button id="btn-save" class="btn btn-outline-sparta btn-lg"><i class="fa fa-floppy-o"></i></button>
+            <button id="btn-delete" class="btn btn-sparta btn-lg"><i class="fa fa-trash-o"></i></button>
+        </div>
+        <hr>
+        <div id="definitions">
+            {% for definition in result.definitions %}
+            <div style="padding:10px">
+                <i>{{definition.type}}</i>
+                <br>{{ definition.definition.encode('ascii', 'ignore').decode('utf-8') }}<br>
+                {% if definition.example %}
+                <span class="example">{{ definition.example.encode('ascii', 'ignore').decode('utf-8')|safe }}</span>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
 </body>
 </html>
