@@ -221,3 +221,45 @@ $.ajax({
     }
   })
 ```
+
+15. AWS
+1) 한국시간 세팅
+```
+sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+```
+
+2) 파이썬 (python3 → python)
+```
+sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
+```
+
+3) pip (pip3 → pip)
+```
+# pip3 설치
+sudo apt-get update
+sudo apt-get install -y python3-pip
+
+# pip3 대신 pip 라고 입력하기 위한 명령어
+sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
+```
+
+4) 포트포워딩 (80포트 → 5000포트)
+```
+sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
+```
+
+5) nohup 설정하기
+- 원격 접속을 종료하더라도 서버가 계속 돌아가게 하기
+```
+# 아래의 명령어로 실행하면 된다
+nohup python app.py &
+```
+
+- 서버 종료하기 - 강제종료하는 방법
+```
+# 아래 명령어로 미리 pid 값(프로세스 번호)을 본다
+ps -ef | grep 'app.py'
+
+# 아래 명령어로 특정 프로세스를 죽인다
+kill -9 [pid값]
+```
