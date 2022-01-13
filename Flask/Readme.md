@@ -237,7 +237,7 @@ $.ajax({
 ```
 </br><br>
 
-15. AWS
+## AWS
 1) 한국시간 세팅
 ```
 sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
