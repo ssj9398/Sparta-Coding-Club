@@ -31,6 +31,7 @@ gus = rjson['RealtimeCityAir']['row']
 for gu in gus:
 	print(gu['MSRSTE_NM'], gu['IDEX_MVL'])
 ```
+</br><br>
 
 ## 크롤링 Bs4
 3. 크롤링 (Bs4)
@@ -47,6 +48,7 @@ data = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.nhn?sel=pnt&d
 # 이제 코딩을 통해 필요한 부분을 추출하면 된다.
 soup = BeautifulSoup(data.text, 'html.parser')
 ```
+</br><br>
 
 4. Bs4로 값을 가져와 찍어보기
 ```python
@@ -71,6 +73,7 @@ for movie in movies:
         # a의 text를 찍어본다.
         print (a_tag.text)
 ```
+</br><br>
 
 5. Bs4 Select 사용법
 ```python
@@ -88,6 +91,7 @@ soup.select('태그명[속성="값"]')
 # 한 개만 가져오고 싶은 경우
 soup.select_one('위와 동일')
 ```
+</br><br>
 
 ## pymongo
 
@@ -97,6 +101,7 @@ No-SQL
 
 딕셔너리 형태로 데이터를 저장해두는 DB입니다. 고로 데이터 하나 하나 마다 같은 값들을 가질 필요가 없게 됩니다. 자유로운 형태의 데이터 적재에 유리한 대신, 일관성이 부족할 수 있습니다.
 ```
+</br><br>
 
 7. pymongo(insert)
 ```python
@@ -111,6 +116,7 @@ db.users.insert_one({'name':'bobby','age':21})
 db.users.insert_one({'name':'kay','age':27})
 db.users.insert_one({'name':'john','age':30})
 ```
+</br><br>
 
 8. pymongo(find)
 ```python
@@ -130,12 +136,14 @@ print(all_users[0]['name']) # 0번째 결과값의 'name'을 보기
 for user in all_users:      # 반복문을 돌며 모든 결과값을 보기
     print(user)
 ```
+</br><br>
 
 9. pymongo(find_one)
 ```python
 user = db.users.find_one({'name':'bobby'})
 print(user)
 ```
+</br><br>
 
 10. pymongo(update_one)
 ```python
@@ -148,6 +156,7 @@ db.users.update_one({'name':'bobby'},{'$set':{'age':19}})
 user = db.users.find_one({'name':'bobby'})
 print(user)
 ```
+</br><br>
 
 11. pymongo(delete_one)
 ```
@@ -156,6 +165,7 @@ db.users.delete_one({'name':'bobby'})
 user = db.users.find_one({'name':'bobby'})
 print(user)
 ```
+</br><br>
 
 ## Flask
 12. Flask 기본
@@ -167,6 +177,7 @@ Flask 서버를 만들 때, 항상
  ㄴtemplates 폴더
  ㄴapp.py 파일
 ```
+</br><br>
 
 13. Flask index.html
 ```python
@@ -183,6 +194,7 @@ def home():
 if __name__ == '__main__':
    app.run('0.0.0.0', port=5000, debug=True)
 ```
+</br><br>
 
 14. Flask Get, Post
 1) Get
@@ -203,6 +215,8 @@ $.ajax({
     }
   })
 ```
+</br><br>
+
 2) Post
 ```python
 @app.route('/test', methods=['POST'])
@@ -221,6 +235,7 @@ $.ajax({
     }
   })
 ```
+</br><br>
 
 15. AWS
 1) 한국시간 세팅
@@ -232,6 +247,7 @@ sudo ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 ```
 sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 10
 ```
+</br><br>
 
 3) pip (pip3 → pip)
 ```
@@ -242,11 +258,13 @@ sudo apt-get install -y python3-pip
 # pip3 대신 pip 라고 입력하기 위한 명령어
 sudo update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 1
 ```
+</br><br>
 
 4) 포트포워딩 (80포트 → 5000포트)
 ```
 sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 5000
 ```
+</br><br>
 
 5) nohup 설정하기
 - 원격 접속을 종료하더라도 서버가 계속 돌아가게 하기
@@ -254,6 +272,7 @@ sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-po
 # 아래의 명령어로 실행하면 된다
 nohup python app.py &
 ```
+</br><br>
 
 - 서버 종료하기 - 강제종료하는 방법
 ```
@@ -263,3 +282,68 @@ ps -ef | grep 'app.py'
 # 아래 명령어로 특정 프로세스를 죽인다
 kill -9 [pid값]
 ```
+</br></br>
+
+## Flask JWT
+- jwt임포트
+
+1. 메인 홈 쿠키에 토큰 확인
+```python
+@app.route('/')
+def home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        user_info = db.users.find_one({"username": payload["id"]})
+        return render_template('index.html', user_info=user_info)
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return redirect(url_for("login", msg="로그인 정보가 존재하지 않습니다."))
+```
+</br></br>
+
+2. 토큰으로 개인 구분
+
+```python
+@app.route('/user/<username>')
+def user(username):
+    # 각 사용자의 프로필과 글을 모아볼 수 있는 공간
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        status = (username == payload["id"])  # 내 프로필이면 True, 다른 사람 프로필 페이지면 False
+
+        user_info = db.users.find_one({"username": username}, {"_id": False})
+        return render_template('user.html', user_info=user_info, status=status)
+    except (jwt.ExpiredSignatureError, jwt.exceptions.DecodeError):
+        return redirect(url_for("home"))
+```
+</br></br>
+
+3. 로그인 시 토큰 부여
+
+```python
+@app.route('/sign_in', methods=['POST'])
+def sign_in():
+    # 로그인
+    username_receive = request.form['username_give']
+    password_receive = request.form['password_give']
+
+    pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
+    result = db.users.find_one({'username': username_receive, 'password': pw_hash})
+
+    if result is not None:
+        payload = {
+         'id': username_receive,
+         'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
+        }
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
+
+        return jsonify({'result': 'success', 'token': token})
+    # 찾지 못하면
+    else:
+        return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
+```
+
+
