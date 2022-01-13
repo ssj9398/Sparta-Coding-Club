@@ -17,7 +17,7 @@
                 }
             })
 ```
-
+</br><br>
 
 2. Requests 라이브러리
 ```python
